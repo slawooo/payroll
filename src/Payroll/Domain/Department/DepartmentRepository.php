@@ -7,4 +7,9 @@ interface DepartmentRepository
     public function save(Department $department): void;
 
     public function flush(): void;
+
+    /**
+     * @return Department|null
+     */
+    public function findOneBy(array $criteria, array|null $orderBy = null): object|null;
 }
