@@ -1,0 +1,40 @@
+Test task PHP - Payroll
+
+
+Introduction:
+
+XYZ is a company with employees assigned to specific departments. Each employee can only
+be a member of one department. A bonus to the basic salary is calculated depending on the
+department where the employee works. This bonus can be expressed in two ways:
+
+1. A fixed amount is added to the basic salary for each year of work
+2. Percentage - a value given as a percentage per year, different for each department
+3. A department can have a limit in years for which the bonus applies or not
+
+Examples:
+
+A) Adam Kowalski from HR has been with XYZ for 15 years. His base salary is $1,000. The HR
+Department receives a bonus of $100 for each year of work up to 10 years. With the bonus (for
+his first 10 years of work), his monthly salary is $2,000.
+
+B) Ania Nowak has been working in the customer service department for 5 years. Her base
+salary is $1,100. The customer service department receives a 10% bonus yearly. So her
+monthly salary is currently $1,771.56.
+
+
+
+Task:
+
+Create a CLI command or a controller that creates a payroll report for the company (for the
+current month). The report should include the following:
+
+ - Name
+ - Surname
+ - Department
+ - Remuneration base (amount)
+ - Addition to the base (amount) - one of two options described in the introduction
+ - Bonus type (% or fixed type)
+ - Salary with bonus (amount)
+
+The results must be sortable by any column (one at a time).
+The results must be filterable by department, name, and surname.
