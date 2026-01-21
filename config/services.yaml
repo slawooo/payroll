@@ -18,3 +18,9 @@ services:
         exclude:
 #            - '../src/**/*Exception.php'
             - '../src/Kernel.php'
+
+    App\Payroll\Domain\Employee\EmployeeRepository:
+        '@App\Payroll\Infrastructure\Doctrine\Repository\DoctrineEmployeeRepository'
+
+    App\Payroll\Domain\Department\DepartmentRepository:
+        '@App\Payroll\Infrastructure\Doctrine\Repository\DoctrineDepartmentRepository'
