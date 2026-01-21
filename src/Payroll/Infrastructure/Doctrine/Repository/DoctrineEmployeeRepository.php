@@ -23,4 +23,44 @@ class DoctrineEmployeeRepository extends ServiceEntityRepository implements Empl
     {
         $this->getEntityManager()->flush();
     }
+
+    public function findEmployeesBy(array $filters = [], ?string $orderBy = null): array
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->leftJoin('e.department', 'd')
+            ->addSelect('d');
+
+        if (!empty($filters['name'])) {
+            $qb->andWhere('e.name = :name')
+                ->setParameter('name', $filters['name']);
+        }
+
+        if (!empty($filters['surname'])) {
+            $qb->andWhere('e.surname = :surname')
+                ->setParameter('surname', $filters['surname']);
+        }
+
+        if (!empty($filters['department'])) {
+            $qb->andWhere('d.name = :departmentName')
+                ->setParameter('departmentName', $filters['department']);
+        }
+
+        if ($orderBy !== null) {
+            $allowedSorts = [
+                'name' => 'e.name',
+                'surname' => 'e.surname',
+                'base' => 'e.baseSalary.amountInCents',
+                'addition' => 'e.bonus.amountInCents',
+                'total' => 'e.totalSalary.amountInCents',
+                'bonusType' => 'd.bonusType.value',
+                'department' => 'd.name',
+            ];
+
+            if (isset($allowedSorts[$orderBy])) {
+                $qb->orderBy($allowedSorts[$orderBy], 'ASC');
+            }
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

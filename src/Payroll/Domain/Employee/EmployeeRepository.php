@@ -7,4 +7,9 @@ interface EmployeeRepository
     public function save(Employee $employee): void;
 
     public function flush(): void;
+
+    /**
+     * @return Employee[]
+     */
+    public function findEmployeesBy(array $filters = [], ?string $orderBy = null): array;
 }

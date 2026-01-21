@@ -15,3 +15,15 @@
 # Usage
 * `./app console {your-command-here}`
 * `./app stop`
+
+# Examples of custom commands
+* `./app console payroll:add-department HR fixed 100 7`
+* `./app console payroll:add-department DevOps percentage 20 3`
+
+* `./app console payroll:add-employee HR Anna Hałerowa 5 2499.99`
+* `./app console payroll:add-employee DevOps Admin Kowalski 1 2999.99`
+* `./app console payroll:add-employee DevOps Anna Dewseniorska 3 3999.99`
+
+* `./app console payroll:get-payroll-report`
+* `./app console payroll:get-payroll-report --name=Anna --surname=Hałerowa`
+* `./app console payroll:get-payroll-report --department=DevOps --order-by=total`
