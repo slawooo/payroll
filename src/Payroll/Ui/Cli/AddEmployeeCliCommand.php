@@ -24,11 +24,11 @@ class AddEmployeeCliCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('department', InputArgument::REQUIRED);
-        $this->addArgument('name', InputArgument::REQUIRED);
-        $this->addArgument('surname', InputArgument::REQUIRED);
-        $this->addArgument('yearsOfWork', InputArgument::REQUIRED);
-        $this->addArgument('baseSalary', InputArgument::REQUIRED);
+        $this->addArgument('department', InputArgument::REQUIRED, 'Department name');
+        $this->addArgument('name', InputArgument::REQUIRED, 'First name');
+        $this->addArgument('surname', InputArgument::REQUIRED, 'Last name');
+        $this->addArgument('yearsOfWork', InputArgument::REQUIRED, 'Number of years of work');
+        $this->addArgument('baseSalary', InputArgument::REQUIRED, 'Base salary in USD');
     }
 
     /**

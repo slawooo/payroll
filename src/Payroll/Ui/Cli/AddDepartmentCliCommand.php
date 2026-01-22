@@ -24,10 +24,10 @@ class AddDepartmentCliCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('name', InputArgument::REQUIRED);
-        $this->addArgument('bonusType', InputArgument::REQUIRED);
-        $this->addArgument('bonusRate', InputArgument::REQUIRED);
-        $this->addArgument('bonusYearsLimit', InputArgument::OPTIONAL);
+        $this->addArgument('name', InputArgument::REQUIRED, 'Department name');
+        $this->addArgument('bonusType', InputArgument::REQUIRED, 'Valid values: [fixed,percentage]');
+        $this->addArgument('bonusRate', InputArgument::REQUIRED, 'Bonus increment or percent');
+        $this->addArgument('bonusYearsLimit', InputArgument::OPTIONAL, 'Limit in years for which bonus applies');
     }
 
     /**
