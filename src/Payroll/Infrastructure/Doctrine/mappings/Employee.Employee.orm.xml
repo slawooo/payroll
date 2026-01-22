@@ -17,7 +17,7 @@
 
         <field name="surname" type="string"/>
 
-        <field name="yearsOfWork" type="integer"/>
+        <field name="hireDate" type="datetime_immutable"/>
 
         <embedded name="baseSalary" class="App\Payroll\Domain\Shared\Value\Money"/>
 

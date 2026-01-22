@@ -7,6 +7,7 @@ use App\Payroll\Domain\Department\Value\BonusType;
 use App\Payroll\Domain\Employee\Employee;
 use App\Payroll\Domain\Shared\Value\Money;
 use App\Tests\Functional\Functional;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -92,7 +93,7 @@ final class GetPayrollReportCliCommandTest extends Functional
             name: $name,
             surname: $surname,
             department: $department,
-            yearsOfWork: 3,
+            hireDate: (new DateTimeImmutable())->modify('-3 years'),
             baseSalary: Money::create($salary),
         );
     }

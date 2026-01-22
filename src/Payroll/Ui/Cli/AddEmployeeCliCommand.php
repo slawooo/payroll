@@ -27,7 +27,7 @@ class AddEmployeeCliCommand extends Command
         $this->addArgument('department', InputArgument::REQUIRED, 'Department name');
         $this->addArgument('name', InputArgument::REQUIRED, 'First name');
         $this->addArgument('surname', InputArgument::REQUIRED, 'Last name');
-        $this->addArgument('yearsOfWork', InputArgument::REQUIRED, 'Number of years of work');
+        $this->addArgument('hireDate', InputArgument::REQUIRED, 'Hire date in YYYY-MM-DD format');
         $this->addArgument('baseSalary', InputArgument::REQUIRED, 'Base salary in USD');
     }
 
@@ -40,7 +40,7 @@ class AddEmployeeCliCommand extends Command
             $input->getArgument('department'),
             $input->getArgument('name'),
             $input->getArgument('surname'),
-            (int) $input->getArgument('yearsOfWork'),
+            $input->getArgument('hireDate'),
             (float) $input->getArgument('baseSalary'),
         ));
 

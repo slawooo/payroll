@@ -6,6 +6,7 @@ use App\Payroll\Domain\Department\Department;
 use App\Payroll\Domain\Department\Value\BonusType;
 use App\Payroll\Domain\Employee\Employee;
 use App\Payroll\Domain\Shared\Value\Money;
+use DateTimeImmutable;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -29,13 +30,14 @@ final class EmployeeTest extends TestCase
             bonusYearsLimit: $bonusYearsLimit,
         );
         $base = Money::create($baseSalary);
+        $hireDate = (new DateTimeImmutable())->modify("-{$yearsOfWork} years");
 
         // When
         $employee = new Employee(
             name: 'John',
             surname: 'Doe',
             department: $department,
-            yearsOfWork: $yearsOfWork,
+            hireDate: $hireDate,
             baseSalary: $base,
         );
 

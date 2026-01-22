@@ -23,9 +23,9 @@
 * `./app console payroll:add-department HR fixed 100 7`
 * `./app console payroll:add-department DevOps percentage 20 3`
 
-* `./app console payroll:add-employee HR Anna Hałerowa 5 2499.99`
-* `./app console payroll:add-employee DevOps Admin Kowalski 1 2999.99`
-* `./app console payroll:add-employee DevOps Anna Dewseniorska 3 3999.99`
+* `./app console payroll:add-employee HR "Anna Hałerowa" "2020-05-15" 2499.99`
+* `./app console payroll:add-employee DevOps "Admin Kowalski" "2024-03-10" 2999.99`
+* `./app console payroll:add-employee DevOps "Anna Dewseniorska" "2022-07-22" 3999.99`
 
 * `./app console payroll:get-payroll-report`
 * `./app console payroll:get-payroll-report --name=Anna --surname=Hałerowa`
@@ -51,6 +51,6 @@ Tests cover:
 ### Design trade-offs / missing pieces
 
 * _Bonus_ and _total salary_ are stored as separate fields on `Employee`. They could be computed on the fly, but having them stored makes filtering/sorting the report much simpler and more efficient. The downside is that any future changes to salary/bonus logic must keep these fields in sync.
-* I treated _years of work_ as a simple number (like in examples in task description) but in a real system I’d likely store `hireDate` and derive it, but here I kept the simpler model to avoid "over‑engineering things".
+* I use a plain `DateTimeImmutable` in the domain model to calculate the years of work. In a real production system I’d inject a `Clock` (time provider) into a domain service instead, to make time‑based logic deterministic and easier to test, but here I keep the simpler approach to avoid over‑engineering.
 * Currently, `Department` directly creates the appropriate `BonusCalculator` via `BonusCalculatorFactory`. For a larger system, it might be cleaner to push this into an `EmployeeFactory` (or domain service) and inject the calculator factory there. But I wanted to keep the example simple and to avoid "anemic entities".
 * Exception handling/logging is minimal in the CLI layer – in a real system you would wrap handlers, translate domain exceptions into user-friendly messages, and log errors.

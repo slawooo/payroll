@@ -7,6 +7,7 @@ use App\Payroll\Domain\Department\Exception\DepartmentException;
 use App\Payroll\Domain\Employee\Employee;
 use App\Payroll\Domain\Employee\EmployeeRepository;
 use App\Payroll\Domain\Shared\Value\Money;
+use DateTimeImmutable;
 
 class AddEmployeeCommandHandler
 {
@@ -32,7 +33,7 @@ class AddEmployeeCommandHandler
             $command->getName(),
             $command->getSurname(),
             $department,
-            $command->getYearsOfWork(),
+            new DateTimeImmutable($command->getHireDate()),
             Money::create($command->getBaseSalary()),
         );
 

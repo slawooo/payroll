@@ -9,6 +9,7 @@ use App\Payroll\Domain\Department\Exception\DepartmentException;
 use App\Payroll\Domain\Department\Value\BonusType;
 use App\Payroll\Domain\Employee\EmployeeRepository;
 use App\Tests\Integration\Integration;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class AddEmployeeCommandHandlerTest extends Integration
@@ -30,7 +31,7 @@ final class AddEmployeeCommandHandlerTest extends Integration
             department: 'IT',
             name: 'John',
             surname: 'Doe',
-            yearsOfWork: 3,
+            hireDate: (new DateTimeImmutable())->modify('-3 years')->format('Y-m-d'),
             baseSalary: 10000.00,
         );
 
@@ -74,7 +75,7 @@ final class AddEmployeeCommandHandlerTest extends Integration
             department: 'NonExisting',
             name: 'John',
             surname: 'Doe',
-            yearsOfWork: 3,
+            hireDate: (new DateTimeImmutable())->modify('-3 years')->format('Y-m-d'),
             baseSalary: 10000.00,
         );
 

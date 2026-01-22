@@ -10,6 +10,7 @@ use App\Payroll\Domain\Department\Value\BonusType;
 use App\Payroll\Domain\Employee\Employee;
 use App\Payroll\Domain\Shared\Value\Money;
 use App\Tests\Integration\Integration;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 
 final class GetPayrollReportQueryHandlerTest extends Integration
@@ -89,7 +90,7 @@ final class GetPayrollReportQueryHandlerTest extends Integration
             name: $name,
             surname: $surname,
             department: $department,
-            yearsOfWork: 2,
+            hireDate: (new DateTimeImmutable())->modify('-2 years'),
             baseSalary: Money::create($salary),
         );
     }

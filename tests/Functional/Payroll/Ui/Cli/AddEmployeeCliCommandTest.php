@@ -7,6 +7,7 @@ use App\Payroll\Domain\Department\Value\BonusType;
 use App\Payroll\Domain\Employee\Employee;
 use App\Payroll\Domain\Employee\EmployeeRepository;
 use App\Tests\Functional\Functional;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
@@ -41,7 +42,7 @@ final class AddEmployeeCliCommandTest extends Functional
             'department'  => 'IT',
             'name'        => 'John',
             'surname'     => 'Doe',
-            'yearsOfWork' => '3',
+            'hireDate'    => (new DateTimeImmutable())->modify('-3 years')->format('Y-m-d'),
             'baseSalary'  => '10000.00',
         ]);
 

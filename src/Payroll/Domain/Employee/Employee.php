@@ -4,6 +4,7 @@ namespace App\Payroll\Domain\Employee;
 
 use App\Payroll\Domain\Department\Department;
 use App\Payroll\Domain\Shared\Value\Money;
+use DateTimeImmutable;
 
 class Employee
 {
@@ -17,7 +18,7 @@ class Employee
         private string $name,
         private string $surname,
         private Department $department,
-        private int $yearsOfWork,
+        private DateTimeImmutable $hireDate,
         private Money $baseSalary,
     ) {
         $this->applyBonus();
@@ -25,8 +26,13 @@ class Employee
 
     private function applyBonus(): void
     {
-        $this->bonus = $this->department->calculateBonus($this->baseSalary, $this->yearsOfWork);
+        $this->bonus = $this->department->calculateBonus($this->baseSalary, $this->getYearsOfWork());
         $this->totalSalary = $this->baseSalary->add($this->bonus);
+    }
+
+    public function getYearsOfWork(): int
+    {
+        return $this->hireDate->diff(new DateTimeImmutable())->y;
     }
 
     public function getName(): string

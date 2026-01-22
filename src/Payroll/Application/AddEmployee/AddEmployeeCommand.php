@@ -8,7 +8,7 @@ class AddEmployeeCommand
         private readonly string $department,
         private readonly string $name,
         private readonly string $surname,
-        private readonly int $yearsOfWork,
+        private readonly string $hireDate,
         private readonly float $baseSalary,
     ){
     }
@@ -28,9 +28,9 @@ class AddEmployeeCommand
         return $this->surname;
     }
 
-    public function getYearsOfWork(): int
+    public function getHireDate(): string
     {
-        return $this->yearsOfWork;
+        return $this->hireDate;
     }
 
     public function getBaseSalary(): float
