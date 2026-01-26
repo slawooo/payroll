@@ -14,6 +14,10 @@
 * `./app tests tests/Integration`
 * `./app tests tests/Functional`
 
+### CS Fixer
+* `./app cscheck`
+* `./app csfix`
+
 ### Usage
 * `./app console {your-command-here}`
 * `./app shell` 

@@ -30,6 +30,11 @@ jobs:
           docker exec -w /var/www/payroll tidio_payroll_php \
             php bin/composer install --no-interaction --no-progress
 
+      - name: Run PHP-CS-Fixer (dry-run)
+        run: |
+          docker exec -w /var/www/payroll tidio_payroll_php \
+            php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff
+
       - name: Run unit tests
         run: |
           docker exec -w /var/www/payroll tidio_payroll_php \
