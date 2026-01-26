@@ -20,7 +20,7 @@ final class EmployeeTest extends TestCase
         float $baseSalary,
         int $yearsOfWork,
         string $expectedBonus,
-        string $expectedTotalSalary
+        string $expectedTotalSalary,
     ): void {
         // Given
         $department = new Department(
@@ -50,22 +50,22 @@ final class EmployeeTest extends TestCase
     {
         return [
             'fixed, within limit' => [
-                'bonusType'          => BonusType::FIXED,
-                'bonusRate'          => 100.00,
-                'bonusYearsLimit'    => 5,
-                'baseSalary'         => 10000.00,
-                'yearsOfWork'        => 3,
-                'expectedBonus'      => '$300.00',
-                'expectedTotalSalary'=> '$10,300.00',
+                'bonusType' => BonusType::FIXED,
+                'bonusRate' => 100.00,
+                'bonusYearsLimit' => 5,
+                'baseSalary' => 10000.00,
+                'yearsOfWork' => 3,
+                'expectedBonus' => '$300.00',
+                'expectedTotalSalary' => '$10,300.00',
             ],
             'percentage, exceeds limit' => [
-                'bonusType'          => BonusType::PERCENTAGE,
-                'bonusRate'          => 10.0,
-                'bonusYearsLimit'    => 2,
-                'baseSalary'         => 10000.00,
-                'yearsOfWork'        => 4,
-                'expectedBonus'      => '$2,100.00',
-                'expectedTotalSalary'=> '$12,100.00',
+                'bonusType' => BonusType::PERCENTAGE,
+                'bonusRate' => 10.0,
+                'bonusYearsLimit' => 2,
+                'baseSalary' => 10000.00,
+                'yearsOfWork' => 4,
+                'expectedBonus' => '$2,100.00',
+                'expectedTotalSalary' => '$12,100.00',
             ],
         ];
     }

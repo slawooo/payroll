@@ -10,7 +10,7 @@ class AddEmployeeCommand
         private readonly string $surname,
         private readonly string $hireDate,
         private readonly float $baseSalary,
-    ){
+    ) {
     }
 
     public function getDepartment(): string

@@ -12,7 +12,7 @@ class PayrollRowDto
         private readonly string $bonus,
         private readonly string $bonusType,
         private readonly string $totalSalary,
-    ){
+    ) {
     }
 
     public function getName(): string

@@ -14,7 +14,7 @@ class Department
         private string $name,
         private BonusType $bonusType,
         private float $bonusRate,
-        private ?int $bonusYearsLimit = null
+        private ?int $bonusYearsLimit = null,
     ) {
     }
 

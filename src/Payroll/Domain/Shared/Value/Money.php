@@ -11,7 +11,7 @@ class Money
 
     public static function create(float|string $amount): static
     {
-        return new static((int) (round(100*$amount)));
+        return new static((int) (round(100 * $amount)));
     }
 
     public function add(Money $money): Money

@@ -9,7 +9,7 @@ class AddDepartmentCommand
         private readonly string $bonusType,
         private readonly float $bonusRate,
         private readonly ?int $bonusYearsLimit,
-    ){
+    ) {
     }
 
     public function getName(): string

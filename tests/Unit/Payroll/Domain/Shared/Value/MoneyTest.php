@@ -21,12 +21,12 @@ final class MoneyTest extends TestCase
     public static function createCasesProvider(): array
     {
         return [
-            'integer dollars'      => [100, '$100.00'],
-            'decimal dollars'      => [123.45, '$123.45'],
-            'string amount'        => ['50.25', '$50.25'],
-            'round up half'        => [10.005, '$10.01'],    // 10.005 * 100 => 1000.5 → 1001
-            'round down'           => [10.004, '$10.00'],    // 10.004 * 100 => 1000.4 → 1000
-            'thousands separator'  => [1234.56, '$1,234.56'],
+            'integer dollars' => [100, '$100.00'],
+            'decimal dollars' => [123.45, '$123.45'],
+            'string amount' => ['50.25', '$50.25'],
+            'round up half' => [10.005, '$10.01'], // 10.005 * 100 => 1000.5 → 1001
+            'round down' => [10.004, '$10.00'],    // 10.004 * 100 => 1000.4 → 1000
+            'thousands separator' => [1234.56, '$1,234.56'],
         ];
     }
 

@@ -19,7 +19,7 @@ class GetPayrollReportCliCommand extends Command
 {
     public function __construct(
         private readonly GetPayrollReportQueryHandler $getPayrollReportQueryHandler,
-        ?string $name = null
+        ?string $name = null,
     ) {
         parent::__construct($name);
     }

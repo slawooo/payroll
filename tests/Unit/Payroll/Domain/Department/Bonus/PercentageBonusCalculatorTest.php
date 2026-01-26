@@ -15,7 +15,7 @@ final class PercentageBonusCalculatorTest extends TestCase
         int $yearsOfWork,
         float $bonusRate,
         ?int $bonusYearsLimit,
-        string $expectedBonus
+        string $expectedBonus,
     ): void {
         // Given
         $calculator = new PercentageBonusCalculator();

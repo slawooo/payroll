@@ -39,11 +39,11 @@ final class AddEmployeeCliCommandTest extends Functional
 
         // When
         $exitCode = $tester->execute([
-            'department'  => 'IT',
-            'name'        => 'John',
-            'surname'     => 'Doe',
-            'hireDate'    => (new DateTimeImmutable())->modify('-3 years')->format('Y-m-d'),
-            'baseSalary'  => '10000.00',
+            'department' => 'IT',
+            'name' => 'John',
+            'surname' => 'Doe',
+            'hireDate' => (new DateTimeImmutable())->modify('-3 years')->format('Y-m-d'),
+            'baseSalary' => '10000.00',
         ]);
 
         // Then

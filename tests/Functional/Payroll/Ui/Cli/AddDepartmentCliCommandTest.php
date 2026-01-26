@@ -32,9 +32,9 @@ final class AddDepartmentCliCommandTest extends Functional
 
         // When
         $exitCode = $tester->execute([
-            'name'            => 'IT',
-            'bonusType'       => 'fixed',
-            'bonusRate'       => '100.0',
+            'name' => 'IT',
+            'bonusType' => 'fixed',
+            'bonusRate' => '100.0',
             'bonusYearsLimit' => '5',
         ]);
 
