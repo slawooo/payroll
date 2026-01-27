@@ -9,6 +9,7 @@ use App\Payroll\Domain\Employee\EmployeeRepository;
 use App\Tests\Functional\Functional;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -76,5 +77,45 @@ final class AddEmployeeCliCommandTest extends Functional
         $em = self::getContainer()->get(EntityManagerInterface::class);
         $em->persist($department);
         $em->flush();
+    }
+
+    public function testExecuteWithNonNumericBaseSalary(): void
+    {
+        // Given
+        $command = $this->application->find('payroll:add-employee');
+        $tester = new CommandTester($command);
+
+        // Then
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('baseSalary must be numeric');
+
+        // When
+        $tester->execute([
+            'department' => 'IT',
+            'name' => 'John',
+            'surname' => 'Doe',
+            'hireDate' => '2020-01-26',
+            'baseSalary' => 'not-a-number', // invalid value
+        ]);
+    }
+
+    public function testExecuteWithInvalidHireDate(): void
+    {
+        // Given
+        $command = $this->application->find('payroll:add-employee');
+        $tester = new CommandTester($command);
+
+        // Then
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('hireDate must be a valid date in format YYYY-MM-DD');
+
+        // When
+        $tester->execute([
+            'department' => 'IT',
+            'name' => 'John',
+            'surname' => 'Doe',
+            'hireDate' => '2020-02-30', // invalid value
+            'baseSalary' => '10000.00',
+        ]);
     }
 }

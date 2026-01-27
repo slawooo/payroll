@@ -4,6 +4,7 @@ namespace App\Tests\Functional\Payroll\Ui\Cli;
 
 use App\Payroll\Domain\Department\DepartmentRepository;
 use App\Tests\Functional\Functional;
+use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Tester\CommandTester;
@@ -45,5 +46,43 @@ final class AddDepartmentCliCommandTest extends Functional
 
         $department = $this->departmentRepository->findOneBy(['name' => 'IT']);
         $this->assertSame('IT', $department->getName());
+    }
+
+    public function testExecuteWithNonNumericBonusRate(): void
+    {
+        // Given
+        $command = $this->application->find('payroll:add-department');
+        $tester = new CommandTester($command);
+
+        // Then
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('bonusRate must be numeric');
+
+        // When
+        $tester->execute([
+            'name' => 'IT',
+            'bonusType' => 'fixed',
+            'bonusRate' => 'not-a-number', // invalid value
+            'bonusYearsLimit' => '5',
+        ]);
+    }
+
+    public function testExecuteWithNonNumericBonusYearsLimit(): void
+    {
+        // Given
+        $command = $this->application->find('payroll:add-department');
+        $tester = new CommandTester($command);
+
+        // Then
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('bonusYearsLimit must be numeric');
+
+        // When
+        $tester->execute([
+            'name' => 'IT',
+            'bonusType' => 'fixed',
+            'bonusRate' => '100.0',
+            'bonusYearsLimit' => 'not-a-number', // invalid value
+        ]);
     }
 }

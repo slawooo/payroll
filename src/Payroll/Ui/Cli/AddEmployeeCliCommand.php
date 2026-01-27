@@ -5,6 +5,8 @@ namespace App\Payroll\Ui\Cli;
 use App\Payroll\Application\AddEmployee\AddEmployeeCommand;
 use App\Payroll\Application\AddEmployee\AddEmployeeCommandHandler;
 use App\Payroll\Domain\Department\Exception\DepartmentException;
+use App\Payroll\Ui\Cli\Validation\DateArgumentValidator;
+use App\Payroll\Ui\Cli\Validation\NumericArgumentValidator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,6 +20,8 @@ class AddEmployeeCliCommand extends Command
 {
     public function __construct(
         private readonly AddEmployeeCommandHandler $addEmployeeCommandHandler,
+        private readonly NumericArgumentValidator $numericArgumentCliValidator,
+        private readonly DateArgumentValidator $dateArgumentValidator,
     ) {
         parent::__construct();
     }
@@ -36,12 +40,18 @@ class AddEmployeeCliCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $hireDate = $input->getArgument('hireDate');
+        $this->dateArgumentValidator->validate($hireDate, 'hireDate');
+
+        $baseSalary = $input->getArgument('baseSalary');
+        $this->numericArgumentCliValidator->validate($baseSalary, 'baseSalary');
+
         $this->addEmployeeCommandHandler->run(new AddEmployeeCommand(
             $input->getArgument('department'),
             $input->getArgument('name'),
             $input->getArgument('surname'),
-            $input->getArgument('hireDate'),
-            (float) $input->getArgument('baseSalary'),
+            $hireDate,
+            (float) $baseSalary,
         ));
 
         $output->writeln('Employee added successfully!');

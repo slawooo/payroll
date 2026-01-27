@@ -42,7 +42,7 @@ class GetPayrollReportCliCommand extends Command
 
         $query = new GetPayrollReportQuery(
             $filters,
-            (string) $input->getOption('order-by'),
+            $input->getOption('order-by') ?: null,
         );
 
         $payrollRows = $this->getPayrollReportQueryHandler->run($query);

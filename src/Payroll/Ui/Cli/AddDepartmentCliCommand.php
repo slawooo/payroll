@@ -5,6 +5,7 @@ namespace App\Payroll\Ui\Cli;
 use App\Payroll\Application\AddDepartment\AddDepartmentCommand;
 use App\Payroll\Application\AddDepartment\AddDepartmentCommandHandler;
 use App\Payroll\Domain\Department\Exception\DepartmentException;
+use App\Payroll\Ui\Cli\Validation\NumericArgumentValidator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,6 +19,7 @@ class AddDepartmentCliCommand extends Command
 {
     public function __construct(
         private readonly AddDepartmentCommandHandler $addDepartmentCommandHandler,
+        private readonly NumericArgumentValidator $numericArgumentCliValidator,
     ) {
         parent::__construct();
     }
@@ -38,13 +40,17 @@ class AddDepartmentCliCommand extends Command
         $bonusYearsLimit = $input->getArgument('bonusYearsLimit');
 
         if ($bonusYearsLimit !== null) {
+            $this->numericArgumentCliValidator->validate($bonusYearsLimit, 'bonusYearsLimit');
             $bonusYearsLimit = (int) $bonusYearsLimit;
         }
+
+        $bonusRate = $input->getArgument('bonusRate');
+        $this->numericArgumentCliValidator->validate($bonusRate, 'bonusRate');
 
         $this->addDepartmentCommandHandler->run(new AddDepartmentCommand(
             $input->getArgument('name'),
             $input->getArgument('bonusType'),
-            (float) $input->getArgument('bonusRate'),
+            (float) $bonusRate,
             $bonusYearsLimit,
         ));
 
