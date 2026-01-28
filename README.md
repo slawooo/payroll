@@ -1,12 +1,9 @@
-## Commands
+## Setup and utility commands
 
 ### Installation
-* use `app` script in terminal
 * `./app start`
 * `./app composer install`
 * `./app console doctrine:schema:create`
-* `./app console doctrine:schema:create --env=test`
-* `./app console doctrine:schema:drop --force`
 
 ### Testing
 * `./app tests`
@@ -18,19 +15,20 @@
 * `./app cscheck`
 * `./app csfix`
 
-### Usage
+### Other utility commands
 * `./app console {your-command-here}`
 * `./app shell` 
 * `./app stop`
 
-### Custom command examples
+## Application commands (business use cases)
+### Add department
 * `./app console payroll:add-department HR fixed 100 7`
 * `./app console payroll:add-department DevOps percentage 20 3`
-
+### Add employee
 * `./app console payroll:add-employee HR "Anna Hałerowa" "2020-05-15" 2499.99`
 * `./app console payroll:add-employee DevOps "Admin Kowalski" "2024-03-10" 2999.99`
 * `./app console payroll:add-employee DevOps "Anna Dewseniorska" "2022-07-22" 3999.99`
-
+### Get report
 * `./app console payroll:get-payroll-report`
 * `./app console payroll:get-payroll-report --name=Anna --surname=Hałerowa`
 * `./app console payroll:get-payroll-report --department=DevOps --order-by=total`
@@ -59,3 +57,8 @@ Tests cover:
 * Currently, `Department` directly creates the appropriate `BonusCalculator` via `BonusCalculatorFactory`. For a larger system, it might be cleaner to push this into an `EmployeeFactory` (or domain service) and inject the calculator factory there. But I wanted to keep the example simple and to avoid "anemic entities".
 * The `Money` value object internally stores amounts as integer cents (which is good for precision), but it still uses floats for some math operations (e.g. in `increaseByPercent`). In a production system, it would be better to fully avoid floats in monetary calculations and use `bcmath` (or a similar arbitrary‑precision approach) instead.
 * Exception handling/logging is minimal in the CLI layer – in a real system you would wrap handlers, translate domain exceptions into user-friendly messages, and log errors.
+
+
+## Task description
+
+You can find the original task description here: [task.txt](doc/task.txt)
