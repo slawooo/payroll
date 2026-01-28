@@ -19,8 +19,8 @@ final class EmployeeTest extends TestCase
         ?int $bonusYearsLimit,
         float $baseSalary,
         int $yearsOfWork,
-        string $expectedBonus,
-        string $expectedTotalSalary,
+        int $expectedBonusInCents,
+        int $expectedTotalSalaryInCents,
     ): void {
         // Given
         $department = new Department(
@@ -42,8 +42,8 @@ final class EmployeeTest extends TestCase
         );
 
         // Then
-        $this->assertSame($expectedBonus, $employee->getBonus()->toString());
-        $this->assertSame($expectedTotalSalary, $employee->getTotalSalary()->toString());
+        $this->assertSame($expectedBonusInCents, $employee->getBonus()->getAmountInCents());
+        $this->assertSame($expectedTotalSalaryInCents, $employee->getTotalSalary()->getAmountInCents());
     }
 
     public static function bonusCasesProvider(): array
@@ -55,8 +55,8 @@ final class EmployeeTest extends TestCase
                 'bonusYearsLimit' => 5,
                 'baseSalary' => 10000.00,
                 'yearsOfWork' => 3,
-                'expectedBonus' => '$300.00',
-                'expectedTotalSalary' => '$10,300.00',
+                'expectedBonusInCents' => 30000,
+                'expectedTotalSalaryInCents' => 1030000,
             ],
             'percentage, exceeds limit' => [
                 'bonusType' => BonusType::PERCENTAGE,
@@ -64,8 +64,8 @@ final class EmployeeTest extends TestCase
                 'bonusYearsLimit' => 2,
                 'baseSalary' => 10000.00,
                 'yearsOfWork' => 4,
-                'expectedBonus' => '$2,100.00',
-                'expectedTotalSalary' => '$12,100.00',
+                'expectedBonusInCents' => 210000,
+                'expectedTotalSalaryInCents' => 1210000,
             ],
         ];
     }

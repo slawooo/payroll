@@ -60,9 +60,9 @@ final class AddEmployeeCliCommandTest extends Functional
         $this->assertSame('John', $employee->getName());
         $this->assertSame('Doe', $employee->getSurname());
         $this->assertSame('IT', $employee->getDepartment()->getName());
-        $this->assertSame('$10,000.00', $employee->getBaseSalary()->toString());
-        $this->assertSame('$300.00', $employee->getBonus()->toString());
-        $this->assertSame('$10,300.00', $employee->getTotalSalary()->toString());
+        $this->assertSame(1000000, $employee->getBaseSalary()->getAmountInCents());
+        $this->assertSame(30000, $employee->getBonus()->getAmountInCents());
+        $this->assertSame(1030000, $employee->getTotalSalary()->getAmountInCents());
     }
 
     private function addDepartment(): void

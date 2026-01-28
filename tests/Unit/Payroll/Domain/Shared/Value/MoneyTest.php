@@ -9,24 +9,24 @@ use PHPUnit\Framework\TestCase;
 final class MoneyTest extends TestCase
 {
     #[DataProvider('createCasesProvider')]
-    public function testCreate(float|string $amount, string $expectedString): void
+    public function testCreate(float|string $amount, int $expectedAmountInCents): void
     {
         // When
         $money = Money::create($amount);
 
         // Then
-        $this->assertSame($expectedString, $money->toString());
+        $this->assertSame($expectedAmountInCents, $money->getAmountInCents());
     }
 
     public static function createCasesProvider(): array
     {
         return [
-            'integer dollars' => [100, '$100.00'],
-            'decimal dollars' => [123.45, '$123.45'],
-            'string amount' => ['50.25', '$50.25'],
-            'round up half' => [10.005, '$10.01'], // 10.005 * 100 => 1000.5 → 1001
-            'round down' => [10.004, '$10.00'],    // 10.004 * 100 => 1000.4 → 1000
-            'thousands separator' => [1234.56, '$1,234.56'],
+            'integer dollars' => [100, 10000],
+            'decimal dollars' => [123.45, 12345],
+            'string amount' => ['50.25', 5025],
+            'round up half' => [10.005, 1001], // 10.005 * 100 => 1000.5 → 1001
+            'round down' => [10.004, 1000],    // 10.004 * 100 => 1000.4 → 1000
+            'thousands separator' => [1234.56, 123456],
         ];
     }
 
@@ -40,7 +40,7 @@ final class MoneyTest extends TestCase
         $result = $a->add($b);
 
         // Then
-        $this->assertSame('$125.50', $result->toString());
+        $this->assertSame(12550, $result->getAmountInCents());
     }
 
     public function testSubtract(): void
@@ -53,7 +53,7 @@ final class MoneyTest extends TestCase
         $result = $a->subtract($b);
 
         // Then
-        $this->assertSame('$74.50', $result->toString());
+        $this->assertSame(7450, $result->getAmountInCents());
     }
 
     public function testIncreaseByPercent(): void
@@ -65,6 +65,6 @@ final class MoneyTest extends TestCase
         $result = $money->increaseByPercent(5.0);
 
         // Then
-        $this->assertSame('$10.51', $result->toString());
+        $this->assertSame(1051, $result->getAmountInCents());
     }
 }

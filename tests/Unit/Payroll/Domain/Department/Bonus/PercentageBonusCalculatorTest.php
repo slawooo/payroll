@@ -15,7 +15,7 @@ final class PercentageBonusCalculatorTest extends TestCase
         int $yearsOfWork,
         float $bonusRate,
         ?int $bonusYearsLimit,
-        string $expectedBonus,
+        int $expectedBonusInCents,
     ): void {
         // Given
         $calculator = new PercentageBonusCalculator();
@@ -30,7 +30,7 @@ final class PercentageBonusCalculatorTest extends TestCase
         );
 
         // Then
-        $this->assertSame($expectedBonus, $bonus->toString());
+        $this->assertSame($expectedBonusInCents, $bonus->getAmountInCents());
     }
 
     public static function bonusCasesProvider(): array
@@ -41,21 +41,21 @@ final class PercentageBonusCalculatorTest extends TestCase
                 2,
                 10.0,
                 5,
-                '$2,100.00',
+                210000,
             ],
             'exceeds limit' => [
                 10000.00,
                 5,
                 10.0,
                 3,
-                '$3,310.00',
+                331000,
             ],
             'no limit' => [
                 10000.00,
                 4,
                 5.0,
                 null,
-                '$2,155.06',
+                215506,
             ],
         ];
     }

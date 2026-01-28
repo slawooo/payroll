@@ -15,7 +15,7 @@ final class FixedBonusCalculatorTest extends TestCase
         int $yearsOfWork,
         float $bonusRate,
         ?int $bonusYearsLimit,
-        string $expectedBonus,
+        int $expectedBonusInCents,
     ): void {
         // Given
         $calculator = new FixedBonusCalculator();
@@ -30,7 +30,7 @@ final class FixedBonusCalculatorTest extends TestCase
         );
 
         // Then
-        $this->assertSame($expectedBonus, $bonus->toString());
+        $this->assertSame($expectedBonusInCents, $bonus->getAmountInCents());
     }
 
     public static function bonusCasesProvider(): array
@@ -41,21 +41,21 @@ final class FixedBonusCalculatorTest extends TestCase
                 3,         // yearsOfWork
                 100.00,    // bonusRate
                 5,         // bonusYearsLimit
-                '$300.00', // expectedBonus
+                30000,     // expectedBonusInCents
             ],
             'exceeds limit' => [
                 10000.00,
                 10,
                 100.00,
                 5,
-                '$500.00',
+                50000,
             ],
             'no limit' => [
-                10000.00,
+                1000000,
                 8,
                 150.00,
                 null,
-                '$1,200.00',
+                120000,
             ],
         ];
     }

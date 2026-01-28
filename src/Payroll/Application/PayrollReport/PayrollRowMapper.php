@@ -4,6 +4,7 @@ namespace App\Payroll\Application\PayrollReport;
 
 use App\Payroll\Domain\Department\Value\BonusType;
 use App\Payroll\Domain\Employee\Employee;
+use App\Payroll\Domain\Shared\Value\Money;
 
 class PayrollRowMapper
 {
@@ -13,11 +14,16 @@ class PayrollRowMapper
             $employee->getName(),
             $employee->getSurname(),
             $employee->getDepartment()->getName(),
-            $employee->getBaseSalary()->toString(),
-            $employee->getBonus()->toString(),
+            $this->formatMoney($employee->getBaseSalary()),
+            $this->formatMoney($employee->getBonus()),
             $this->formatBonusType($employee->getDepartment()->getBonusType()),
-            $employee->getTotalSalary()->toString(),
+            $this->formatMoney($employee->getTotalSalary()),
         );
+    }
+
+    private function formatMoney(Money $money): string
+    {
+        return '$' . number_format($money->getAmountInCents() / 100, 2);
     }
 
     private function formatBonusType(BonusType $bonusType): string

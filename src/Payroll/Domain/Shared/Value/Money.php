@@ -14,6 +14,11 @@ class Money
         return new static((int) (round(100 * $amount)));
     }
 
+    public function getAmountInCents(): int
+    {
+        return $this->amountInCents;
+    }
+
     public function add(Money $money): Money
     {
         return new Money($this->amountInCents + $money->amountInCents);
@@ -30,10 +35,5 @@ class Money
         $newAmount = (int) round($this->amountInCents * $multiplier);
 
         return new Money($newAmount);
-    }
-
-    public function toString(): string
-    {
-        return '$' . number_format($this->amountInCents / 100, 2);
     }
 }
