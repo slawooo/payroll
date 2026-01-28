@@ -8,11 +8,15 @@ use App\Payroll\Application\PayrollReport\PayrollRowDto;
 use App\Payroll\Application\PayrollReport\PayrollRowMapper;
 use App\Payroll\Domain\Employee\Employee;
 use App\Payroll\Domain\Employee\EmployeeRepository;
+use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 
 final class GetPayrollReportQueryHandlerTest extends TestCase
 {
-    public function testRunDelegatesToRepositoryAndMapper(): void
+    /**
+     * @throws Exception
+     */
+    public function testRunReturnsMappedDtos(): void
     {
         // Given
         $employeeRepository = $this->createMock(EmployeeRepository::class);
@@ -27,7 +31,6 @@ final class GetPayrollReportQueryHandlerTest extends TestCase
         $employee2 = $this->createMock(Employee::class);
 
         $employeeRepository
-            ->expects(self::once())
             ->method('findEmployeesBy')
             ->with($query->getFilters(), $query->getOrderBy())
             ->willReturn([$employee1, $employee2]);
@@ -36,9 +39,11 @@ final class GetPayrollReportQueryHandlerTest extends TestCase
         $dto2 = $this->createMock(PayrollRowDto::class);
 
         $mapper
-            ->expects(self::exactly(2))
             ->method('map')
-            ->willReturnOnConsecutiveCalls($dto1, $dto2);
+            ->willReturnMap([
+                [$employee1, $dto1],
+                [$employee2, $dto2],
+            ]);
 
         $handler = new GetPayrollReportQueryHandler($employeeRepository, $mapper);
 
