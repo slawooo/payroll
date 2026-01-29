@@ -53,7 +53,15 @@ case "$action" in
   tests )
     shift
     eval "docker exec --env-file ../.env.test -it -u ${PUID} -w /var/www/${dir} ${container_php} \
-          php vendor/bin/simple-phpunit --testdox ${@}" ;;
+          php vendor/bin/phpunit --testdox ${@}" ;;
+  cscheck )
+    shift
+    eval "docker exec -it -u ${PUID} -w /var/www/${dir} ${container_php} \
+          php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff ${@}" ;;
+  csfix )
+    shift
+    eval "docker exec -it -u ${PUID} -w /var/www/${dir} ${container_php} \
+          php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php ${@}" ;;
   composer )
     shift
     eval "docker exec -it -u ${PUID} -w /var/www/${dir} ${container_php} php bin/composer ${@}" ;;

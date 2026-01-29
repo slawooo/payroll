@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker images
+        working-directory: docker
+        run: docker compose build
+
+      - name: Start PHP container
+        working-directory: docker
+        run: docker compose up -d php
+
+      - name: Copy .env.test into container
+        run: |
+          docker cp .env.test tidio_payroll_php:/var/www/payroll/.env.test
+
+      - name: Install Composer dependencies
+        run: |
+          docker exec -w /var/www/payroll tidio_payroll_php \
+            php bin/composer install --no-interaction --no-progress
+
+      - name: Run PHP-CS-Fixer (dry-run)
+        run: |
+          docker exec -w /var/www/payroll tidio_payroll_php \
+            php vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff
+
+      - name: Run unit tests
+        run: |
+          docker exec -w /var/www/payroll tidio_payroll_php \
+            php vendor/bin/phpunit --testdox tests/Unit
+
+      - name: Run integration tests
+        run: |
+          docker exec -w /var/www/payroll tidio_payroll_php \
+            php vendor/bin/phpunit --testdox tests/Integration
+
+      - name: Run functional tests
+        run: |
+          docker exec -w /var/www/payroll tidio_payroll_php \
+            php vendor/bin/phpunit --testdox tests/Functional
+
+      - name: Stop containers
+        if: always()
+        working-directory: docker
+        run: docker compose down
